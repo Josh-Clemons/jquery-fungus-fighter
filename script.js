@@ -30,6 +30,7 @@ function onReady() {
     $('.attack-btn.entangle').on('click', entangleAttack);
     $('.attack-btn.dragon-blade').on('click', dragonBladeAttack);
     $('.attack-btn.star-fire').on('click', starFireAttack);
+    let regenInterval = setInterval(regenerate, 1000);
 }
 
 
@@ -75,11 +76,12 @@ function renderAPHP () {
         }
         savedHumanity();
     }
-    
+
     $('#ap-meter').val(currentAP);
     $('.ap-text').html(`${currentAP} AP`);
     $('#hp-meter').val(currentHP);
     $('.hp-text').html(`${currentHP} HP`);
+
 }
 
 
@@ -97,9 +99,11 @@ function savedHumanity () {
     }
 }
 
-//
-if (currentHP < 50 && currentHP > 0 ) {
-    setInterval(() => {
-        currentHP ++
-    }, 1000);
+function regenerate () {
+    if (currentHP > 0 && currentHP <50 ) {
+        currentHP ++;
+        renderAPHP();
+    }
 }
+
+//
