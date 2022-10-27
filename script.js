@@ -64,12 +64,42 @@ function starFireAttack () {
 
 function renderAPHP () {
     // console.log('current hp', currentHP);
-    if (currentAP < 0 ) {
+    if (currentAP <= 0 && currentHP > 0 ) {
         currentAP = 0;
+        doomedHumanity();
     } 
-    if (currentHP < 0 ) {
+    if (currentHP < 0 || (currentHP <= 0 && currentAP <= 0)) {
         currentHP = 0;
+        if (currentAP < 0) {
+            currentAP = 0;
+        }
+        savedHumanity();
     }
+    
+    $('#ap-meter').val(currentAP);
     $('.ap-text').html(`${currentAP} AP`);
+    $('#hp-meter').val(currentHP);
     $('.hp-text').html(`${currentHP} HP`);
+}
+
+
+function doomedHumanity () {
+    $('.freaky-fungus').removeClass('walk');
+    $('.freaky-fungus').addClass('jump');
+    $('.attack-btn').prop('disabled', true);
+}
+
+function savedHumanity () {
+    $('.freaky-fungus').removeClass('walk');
+    $('.freaky-fungus').addClass('dead');
+    if (currentAP <=0 ) {
+        $('.attack-btn').prop('disabled', true);
+    }
+}
+
+//
+if (currentHP < 50 && currentHP > 0 ) {
+    setInterval(() => {
+        currentHP ++
+    }, 1000);
 }
